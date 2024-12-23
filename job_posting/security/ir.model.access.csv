@@ -1,0 +1,8 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_job_posting,access.job.posting,model_job_posting,,1,1,1,1
+access_job_tag,access.job.tag,model_job_tag,,1,1,1,1
+access_job_titletag,access.jobtitle.tag,model_jobtitle_tag,,1,1,1,1
+access_job_applicant,access.job.applicant,model_job_applicant,,1,1,1,1
+access_job_applicant_user,job.applicant.user,model_job_applicant,,1,1,1,1
+access_applicant_stage,applicant.stage,model_applicant_stage,,1,1,1,1
+access_refuse_reason,refuse.reason,model_refuse_reason,,1,1,1,1

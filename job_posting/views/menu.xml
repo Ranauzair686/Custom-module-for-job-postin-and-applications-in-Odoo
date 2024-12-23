@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_jobposting_root" name="JPS" />
+
+    <menuitem 
+        id="job_posting" 
+        name="Job Postings" 
+        parent="menu_jobposting_root" 
+        action="action_job_post" 
+    />
+
+    <menuitem 
+        id="menu_jobapplications" 
+        name="Job Applications" 
+        parent="menu_jobposting_root" 
+        action="action_job_application" 
+    />
+
+    <menuitem 
+        id="menu_configurationss" 
+        name="Configurations" 
+        parent="menu_jobposting_root" 
+    />
+
+    
+
+    <menuitem 
+        id="job_tag" 
+        name="Skill Tags" 
+        parent="menu_configurationss" 
+        action="action_job_tag" 
+    />
+
+    <menuitem 
+        id="job_title_tag" 
+        name="Job Title Tags" 
+        parent="menu_configurationss" 
+        action="action_job_title_tag" 
+    />
+
+    <menuitem 
+        id="applicant_stage_tag" 
+        name="Applicant Stage" 
+        parent="menu_configurationss" 
+        action="action_applicant_stage" 
+    />
+
+    <menuitem 
+        id="refuse_reason_tag" 
+        name="Refuse Reason" 
+        parent="menu_configurationss"
+        action = "action_refuse_reason"  
+    />
+</odoo>

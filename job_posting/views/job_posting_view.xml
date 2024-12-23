@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Kanban view for the Job.Posting model -->
+    <record id="view_job_posting_kanban" model="ir.ui.view">
+        <field name="name">job.posting.kanban</field>
+        <field name="model">job.posting</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <field name="name_id"/>
+                <field name="location"/>
+                <field name="skills_ids"/>
+                <field name="description"/>
+                <field name="open_positions"/>
+                <field name="job_type"/>
+                <field name="salary"/>
+                <field name="experience"/>
+                <field name="requirements"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="oe_kanban_global_click">
+                            <div class="oe_kanban_details">
+                                <ul>
+                                    <li>
+                                        <b>Job Title:</b> <field name="name_id"/>
+                                    </li>
+
+                                    <li>
+                                        <b>Location:</b> <field name="location"/>
+                                    </li>
+
+                                    <li>
+                                        <b>Experience Level:</b> <field name="experience"/>
+                                    </li>
+
+                                    <li>
+                                        <b>Employment Type:</b> <field name="job_type"/>
+                                    </li>
+
+                                    <li>
+                                        <b>Job Requirements:</b><field name="requirements"/>
+                                    </li>
+                                    
+                                    <li>
+                                        <b>Skills Required:</b> <field name="skills_ids"/>
+                                    </li>
+                                    
+                                    <li>
+                                        <b>Salary We Offer:</b> <field name="salary"/>
+                                    </li>
+                                    
+                                </ul>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+    <!-- Tree view for the Job.Posting model -->
+    <record id="view_job_posting_tree" model="ir.ui.view">
+        <field name="name">job.posting.tree</field>
+        <field name="model">job.posting</field>
+        <field name="arch" type="xml">
+            <tree string="JobPosts">
+                <field name="name_id" widget="many2one_tags"/>
+                <field name="location" optional="hide"/>
+                <field name="skills_ids" widget="many2many_tags"/>
+                <field name="open_positions" optional="hide"/>
+                <field name="job_type" optional="hide"/>
+                <field name="salary"  optional="hide"/>
+                <field name="job_status"  optional="hide"/>
+                <field name="experience" optional="hide"/>
+                <field name="website_published" widget="boolean_toggle"  optional="show"/>
+            </tree> 
+        </field> 
+    </record>    
+    <!-- Form view for the Job.Posting model -->
+    <record id="view_job_posting_form" model="ir.ui.view">
+        <field name="name">job.posting.form</field>
+        <field name="model">job.posting</field>
+        <field name="arch" type="xml">  
+            <form string="JobPost">
+
+                <sheet>
+                    <group> 
+                        <group>
+                            <field name="name_id"  widget="many2one_tags"/>
+                            <field name="description" widget="html" style="border: 1px solid #000; padding: 10px; min-height: 30px;"/>
+                            <field name="requirements" widget="html" style="border: 1px solid #000; padding: 10px; min-height: 30px;"/>
+                            <field name="location"/>
+                        </group> 
+                        <group>
+                            <field name="skills_ids" widget = "many2many_tags"/>
+                            <field name="experience"/>
+                            <field name="job_status" />
+                            <field name="salary"/>
+                            <field name="open_positions"/>
+                            <field name="website_published" widget="boolean_toggle"/>
+
+                        </group>    
+                    </group>
+                </sheet>
+
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" groups="base.group_user"/>
+                    <field name="message_ids"/>
+                </div>
+                
+            </form>
+        </field> 
+    </record> 
+    <!-- Search view / Group BY / And filter for the Job.Posting model -->
+    <record id="view_job_posting_search" model="ir.ui.view">
+        <field name="name">job.posting.search</field>
+        <field name="model">job.posting</field>
+        <field name="arch" type="xml">
+            <search >
+                <field name="name_id" widget="many2one_tags" filter_domain="['|', '|'  , '|', ('name_id', 'ilike', self + '%'), ('job_status', 'ilike', self + '%'), ('job_type', 'ilike', self + '%'), ('location', 'ilike', self)]"/>
+                <field name="location"/>
+                <field name="job_type"/>
+                <filter name="open_jobs"  string="Open Jobs" domain="[('job_status', '=', 'open')]"/>
+                <filter name="close_jobs"  string="Closed Jobs" domain="[('job_status', '=', 'closed')]"/>
+                <filter name="parttime_jobs"  string="Part time Jobs" domain="[('job_type', '=', 'part_time')]"/>
+                <filter name="fulltime_jobs"  string="Full time Jobs" domain="[('job_type', '=', 'full_time')]"/>
+
+                <filter name="onsite_jobs"  string="Onsite Jobs" domain="[('location', '=', 'onsite')]"/>
+                <filter name="remote_jobs"  string="Remote Jobs" domain="[('location', '=', 'remote')]"/>
+                <filter name="hybrid_jobs"  string="Hybrid Jobs" domain="[('location', '=', 'hybrib')]"/>
+
+                <group expand="0" string="Group By">
+                    <filter string="Job Location" name="group_by_joblocation" context="{'group_by':'location'}"/>
+                    <filter string="Employment Type" name="group_by_employtype" context="{'group_by':'job_type'}"/>
+                    <filter string="Job Status" name="group_by_jobstatus" context="{'group_by':'job_status'}"/>
+                </group>
+            </search>
+        </field> 
+    </record> 
+    <!-- Action Window for the Job.Posting model -->
+    <record id="action_job_post" model="ir.actions.act_window">
+        <field name="name">JobPosts</field>
+        <field name="res_model">job.posting</field>
+        <field name="view_mode">tree,form,kanban</field>
+
+        <field name="help" type="html">
+            <p class="o_vieW">
+            Create a new job post 
+            </p>
+        </field>
+    </record>
+
+
+
+
+</odoo>

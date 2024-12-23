@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+    <!-- kanban view of job applicant model  -->
+    <record id="view_job_applicant_kanban" model="ir.ui.view">
+        <field name="name">job.applicant.kanban</field>
+        <field name="model">job.applicant</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="application_stage">
+                <field name="application_stage" />
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="oe_kanban_card oe_kanban_global_click oe_applicant_kanban oe_semantic_html_override">
+                            <div t-attf-class="oe_kanban_card">
+                                <div class="ribbon ribbon-top-right pe-none" attrs="{'invisible': [('application_stage', '!=', 'contractsigned')]}">
+                                    <span class="bg-success">Hired</span>
+                                </div>
+                                <div class="ribbon ribbon-top-right pe-none" attrs="{'invisible': [('application_stage', '!=', 'refused')]}">
+                                    <span class="bg-danger">Refused</span>
+                                </div>
+                                <div class="o_kanban_record_body">
+                                    <strong><field name="name" /></strong>
+                                    <!-- <div><field name="email_from" /></div> -->
+                                    <div><field name="position_id" /></div>
+                                    <div><field name="email" /></div>
+                                    <div><field name="first_interview_remarks" widget="priority"  attrs="{'invisible': [('application_stage', '=', 'initialqualificaton')]}"/></div> 
+                                    <div><field name="second_interview_remarks" widget="priority" attrs="{'invisible': ['|', ('application_stage', '=', 'initialqualificaton')  , ('application_stage', '=', 'firstinterview')]}"  /></div>                                
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+   <!-- Tree view for the applicant model -->
+    <record id="view_job_application_tree" model="ir.ui.view">
+        <field name="name">job.applicant.tree</field>
+        <field name="model">job.applicant</field>
+        <field name="arch" type="xml">
+            <tree string="JobApplications">
+                <field name="reference" readonly="True"/>
+                <field name="name"/>
+                <field name="email"/>
+                <field name="phone" />
+                <field name="position_id"/>
+                <field name="linkedin_profile"/>
+                <field name="short_introduction" optional="hide"/>
+                <field name="application_stage"/>
+                <field name="salary_proposed" attrs="{'invisible': [('application_stage', 'not in', ('contractproposal', 'contractsigned'))]}"/>
+                <field name="salary_expected" attrs="{'invisible': [('application_stage', 'not in', ('contractproposal', 'contractsigned'))]}"/>
+                <field name="first_interview_time" attrs="{'invisible': [ '|', ('application_stage', '=', 'initialqualificaton') , ('application_stage', '=', 'refused')]}" />
+                <field name="first_interview_date" attrs="{'invisible': [ '|', ('application_stage', '=', 'initialqualificaton') , ('application_stage', '=', 'refused')]}" />
+                <!-- Second Interview Time Range -->
+                <field name="second_interview_date" attrs="{'invisible': ['|', '|', ('application_stage', '=', 'initialqualificaton'), ('application_stage', '=', 'firstinterview') , ('application_stage', '=', 'refused')]}"/> 
+                <field name="second_interview_time" attrs="{'invisible': ['|', '|', ('application_stage', '=', 'initialqualificaton'), ('application_stage', '=', 'firstinterview') , ('application_stage', '=', 'refused')]}"/>
+                <field name="document_name" />
+                <field name="interviewer"/>
+            </tree> 
+        </field> 
+    </record> 
+    <!-- Form view for the applicant model -->
+    <record id="view_job_application_form" model="ir.ui.view">
+        <field name="name">job.applicant.form</field>
+        <field name="model">job.applicant</field>
+        <field name="arch" type="xml">  
+            <form string="JobApplications">
+                <header>
+                    <!-- staus bar button with action -->
+                    <button name="action_refuse" type="object" string="Refuse" class = "oe_highlight"/>
+                    <!-- status bar widget -->
+                    <field name="application_stage" widget = "statusbar" options="{'clickable': '1'}"/>
+                </header>
+
+                <sheet>
+                    <widget name="web_ribbon" title="Refused" bg_color="bg-danger" attrs="{'invisible': [('application_stage', '!=', 'refused')]}"/>
+                    <widget name="web_ribbon" title="Hired" bg_color="bg-success" attrs="{'invisible': [('application_stage', '!=', 'contractsigned')]}"/>
+                    <group> 
+                        <group>
+                            <field name="reference" readonly="True"/>
+                            <field name="position_id"/>
+                            <field name="name"/>
+                            <field name="email"/>
+                            <field name="first_interview_remarks" widget="priority" attrs="{'invisible': [('application_stage', '=', 'initialqualificaton')]}"/>
+                            <field name="second_interview_remarks" widget="priority" attrs="{'invisible': ['|', ('application_stage', '=', 'initialqualificaton')  , ('application_stage', '=', 'firstinterview')]}"/>
+                            <field name="document" filename="document_name"/> 
+                            <field name="document_name" invisible="1"/>
+                            <field name="first_interview_time" attrs="{'invisible': [ '|', ('application_stage', '=', 'initialqualificaton') , ('application_stage', '=', 'refused')]}" />
+                            <field name="first_interview_date" attrs="{'invisible': [ '|', ('application_stage', '=', 'initialqualificaton') , ('application_stage', '=', 'refused')]}" />
+                            <!-- Second Interview Time Range -->
+                            <field name="second_interview_date" attrs="{'invisible': ['|', '|', ('application_stage', '=', 'initialqualificaton'), ('application_stage', '=', 'firstinterview') , ('application_stage', '=', 'refused')]}"/> 
+                            <field name="second_interview_time" attrs="{'invisible': ['|', '|', ('application_stage', '=', 'initialqualificaton'), ('application_stage', '=', 'firstinterview') , ('application_stage', '=', 'refused')]}"/>
+                        </group> 
+                        <group>
+                            <field name="phone"/>
+                            <field name="linkedin_profile"/>
+                            <field name="short_introduction"/>
+                            <field name="application_stage"/>
+                            <field name="refuse_reason_id"  attrs="{'invisible': [('application_stage', '!=', 'refused') ]}"/>
+                            <field name="salary_proposed" attrs="{'invisible': [('application_stage', 'not in', ('contractproposal', 'contractsigned'))]}"/>
+                            <field name="salary_expected" attrs="{'invisible': [('application_stage', 'not in', ('contractproposal', 'contractsigned'))]}"/>
+                            <field name="interviewer"/>
+                            
+                        </group>    
+                    </group>
+                </sheet>
+
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" groups="base.group_user"/>
+                    <field name="message_ids"/>
+                </div>
+                
+            </form>
+        </field> 
+    </record>
+    <!-- Search view / Group BY / And filter for the applicant model -->
+    <record id="view_job_applicant_search" model="ir.ui.view">
+        <field name="name">job.applicant</field>
+        <field name="model">job.applicant</field>
+        <field name="arch" type="xml">
+            <search >
+                <field name="name"/>
+                <field name="position_id"/>
+                <field name="reference"/>
+
+                <group expand="0" string="Group By">
+                    <filter string="Job Name" name="group_by_job" context="{'group_by':'position_id'}"/>
+                    <filter string="Applicant Name" name="group_by_name" context="{'group_by':'name'}"/>
+                    <filter string="Applicant Stage" name="group_by_applicant_stage" context="{'group_by':'application_stage'}"/>
+                </group>
+            </search>
+        </field> 
+    </record>
+    <!-- Action window for the applicant model -->
+    <record id="action_job_application" model="ir.actions.act_window">
+        <field name="name">JobApplications</field>
+        <field name="res_model">job.applicant</field>
+        <field name="view_mode">tree,form,kanban</field>
+        <field name="context">{'default_group_by': 'application_stage'}</field>
+        
+
+
+        <field name="help" type="html">
+            <p class="o_vieW">
+            Create a new application
+            </p>
+        </field>
+    </record> 
+
+</odoo>

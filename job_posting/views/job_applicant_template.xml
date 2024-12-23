@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="apply">
+        <t t-call="website.layout">
+            <t t-set="additional_title">Apply Job</t>
+            <!-- header of job application form its title etc -->
+            <div id="wrap"  class="container">
+                <nav aria-label="breadcrumb" class="mt-5">
+                    <ol class="breadcrumb ps-0 mb-0 pb-1">
+                        <li class="breadcrumb-item"><a href="/job" class="text-secondary fw-bold">Jobs</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">
+                            <a t-attf-href="/job/#{slug(job)}">
+                                <span t-field="job.name_id"/>
+                            </a>
+                        </li>
+                    </ol>
+                </nav>
+                <h1 class="mb-4">
+                    Job Application Form
+                </h1>
+            </div>
+            
+            <!-- application form start -->
+            <div class="container">
+                <form id="job_application_form" action="/job/application/submit" method="post" enctype="multipart/form-data" class="o_mark_required row" data-mark="*" data-model_name="job.applicant">
+                    <input type="hidden" name="position_id" t-att-value="job.id"/>
+
+                    <div class="col-12 mb-0 py-2">
+                        <label for="name">Your Name <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="name" name="name" required="required"/>
+                    </div>
+
+                    <div class="col-12 mb-0 py-2">
+                        <label for="email">Your Email <span class="text-danger">*</span></label>
+                        <input type="email" class="form-control" id="email" name="email" required="required"/>
+                    </div>
+
+                    <div class="col-12 mb-0 py-2">
+                        <label for="phone">Phone Number <span class="text-danger">*</span></label>
+                        <input type="tel" class="form-control" id="phone" name="phone" required="required"/>
+                    </div>
+                    
+
+                    <div class="col-12 mb-0 py-2 s_website_form_field s_website_form_required"
+                        data-type="char" data-name="Field">
+                        <div class="row s_col_no_resize s_col_no_bgcolor">
+                            <label for="linkedin_profile">Linkedin Profile<span class="text-danger">*</span></label>
+                            <div class="col-sm" style="position: relative">
+                                <i class="fa fa-linkedin fa-2x m-1 o_linkedin_icon"></i>
+                                <input id="recruitment4" type="text"
+                                    class="form-control s_website_form_input pl64"
+                                    placeholder="e.g. https://www.linkedin.com/in/fpodoo/"
+                                    style="padding-left: 40px"
+                                    name="linkedin_profile"
+                                    data-fill-with="linkedin_profile"/>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-12 mb-0 py-2 s_website_form_field"
+                        data-type="text" data-name="Field">
+                        <div class="row s_col_no_resize s_col_no_bgcolor">
+                            <label for="short_introduction">Short Introduction<span class="text-danger">*</span></label>
+                            <div class="col-sm">
+                                <textarea id="short_introduction"
+                                    class="form-control s_website_form_input"
+                                    placeholder="Optional introduction, or any question you might have about the job…"
+                                    name="short_introduction" rows="5"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 mb-0 py-2">
+                        <label for="document">Your Resume<span class="text-danger">*</span></label>
+                        <input placeholder="Upload only pdf or doc file dont any image" type="file" class="form-control" id="document" name="document" required="required"/>
+                    </div>
+
+                    <div class="col-12 s_website_form_submit mb-4">
+                        <button type="submit" class="btn btn-primary btn-lg">Submit Application</button>
+                    </div>
+                </form> 
+            </div>
+            <!-- application form end -->
+
+        </t>
+    </template>  
+</odoo>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- tree view for jobposting readonly menu -->
+    <record id="view_jobposting_readonly_tree" model="ir.ui.view">
+        <field name="name">job.posting.readonly.tree</field>
+        <field name="model">job.posting</field>
+        <field name="priority">20</field> 
+        <field name="arch" type="xml">
+            <tree string="Job Posts" create="0" delete="0" edit="0">  
+                <field name="name_id" widget="many2one_tags"/>
+                <field name="location" optional="hide"/>
+                <field name="skills_ids" widget="many2many_tags"/>
+                <field name="open_positions" optional="hide"/>
+                <field name="job_type" optional="hide"/>
+                <field name="salary"  optional="hide"/>
+                <field name="job_status"  optional="hide"/>
+                <field name="experience" optional="hide"/>
+            </tree>
+        </field> 
+    </record>
+ 
+    <!-- formview for jobposting readonly menu -->
+    <record id="view_jobposting_readonly_form" model="ir.ui.view">
+        <field name="name">job.posting.readonly.form</field>
+        <field name="model">job.posting</field>
+        <field name="arch" type="xml">
+            <form string="JobPost" create="0" delete="0" edit="0">
+                <sheet>
+                    <group> 
+                        <group>
+                            <field name="name_id"  widget="many2one_tags"/>
+                            <field name="description" widget="html" style="border: 1px solid #000; padding: 10px; min-height: 30px;"/>
+                            <field name="requirements" widget="html" style="border: 1px solid #000; padding: 10px; min-height: 30px;"/>
+                            <field name="location"/>
+                        </group> 
+                        <group>
+                            <field name="skills_ids" widget = "many2many_tags"/>
+                            <field name="experience"/>
+                            <field name="job_status" />
+                            <field name="salary"/>
+                            <field name="open_positions"/>
+
+                        </group>    
+                    </group>
+                </sheet>
+
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" groups="base.group_user"/>
+                    <field name="message_ids"/>
+                </div>
+                
+            </form>
+        </field> 
+    </record>
+
+    <!-- action for jobposting readonly menu -->
+    <record id="action_jobposting_readonly" model="ir.actions.act_window">
+        <field name="name">View Jobs</field>
+        <field name="res_model">job.posting</field>
+        <field name="view_mode">tree,form</field>
+
+        <field name="view_ids" eval="[Command.clear(),
+            (0,0,{'view_mode':'tree' , 'view_id': ref('view_jobposting_readonly_tree')}),
+            (0,0,{'view_mode':'form', 'view_id': ref('view_jobposting_readonly_form')})]"/>
+    </record>
+
+</odoo>

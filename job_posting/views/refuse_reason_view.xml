@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+    <!-- Tree view for the refuse reason -->
+    <record id="view_refuse_reason_tree" model="ir.ui.view">
+        <field name="name">refuse.reason.tree</field>
+        <field name="model">refuse.reason</field>
+        <field name="arch" type="xml">
+            <tree string="Refuse Reasons">
+                <field name="name"/> 
+            </tree> 
+        </field> 
+    </record>
+
+
+    <!-- form view for refuse reason -->
+    <record id="view_refuse_reason_form" model="ir.ui.view">
+        <field name="name">refuse.reason.form</field>
+        <field name="model">refuse.reason</field>
+        <field name="arch" type="xml">
+            <form string="Refuse Reason">
+                <sheet>
+                    <group>
+                        <field name="name"/> 
+                    </group>
+                </sheet>
+            </form>
+        </field> 
+    </record>
+
+
+    <!-- Action Window for the refuse.reason model -->
+    <record id="action_refuse_reason" model="ir.actions.act_window">
+        <field name="name">Refuse Reasons</field>
+        <field name="res_model">refuse.reason</field>
+        <field name="view_mode">tree,form</field>
+
+        <field name="help" type="html">
+            <p class="o_vieW">
+            Create a new refuse resaon
+            </p>
+        </field>
+    </record>
+</odoo>

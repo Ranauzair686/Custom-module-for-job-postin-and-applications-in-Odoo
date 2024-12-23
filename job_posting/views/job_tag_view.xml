@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_job_tag_tree" model="ir.ui.view">
+        <field name="name">job.tag.tree</field>
+        <field name="model">job.tag</field>
+        <field name="arch" type="xml">
+            <tree string="Job Tags" editable = "top">
+                <field name="name" optional="show"/>
+            </tree>
+        </field> 
+    </record>
+
+
+    <record id="action_job_tag" model="ir.actions.act_window">
+        <field name="name">JobTag</field>
+        <field name="res_model">job.tag</field>
+        <field name="view_mode">tree,form</field>
+
+        <field name="help" type="html">
+            <p class="o_vieW">
+            Create a new job tag 
+            </p>
+        </field>
+    </record>
+</odoo>

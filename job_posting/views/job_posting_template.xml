@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+    <template id="index" name="Job">
+        <t t-call="website.layout">
+            <div id="wrap" class="o_website_job_posting_jobs_list bg-100">
+                <!-- this is the header of our /job website like bradcrum of our website -->
+                <div class="oe_structure">
+                    <section class="pt48 pb32 bg-200">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-12 text-center">
+                                    <h2 class="h1 text-secondary">Our Job Offers</h2>
+                                    <h3 class="text-muted">Join us and help disrupt the enterprise market!</h3>
+                                    <p>
+                                        Join us, we offer you an extraordinary chance to learn, to
+                                        develop and to be part of an exciting experience and
+                                        team.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+                <!-- Card for showing jobs -->
+                <div class="container oe_website_jobs">
+                    <div class="row pt48 pb48">
+                        <div class="d-none" id="jobs_grid_left">
+
+                        </div>
+                        <div class="col-lg" id="jobs_grid">
+                            <a t-foreach="jobs" t-as="job" t-attf-href="/job/detail/#{ slug(job) }" t-attf-class="text-decoration-none#{' mt-3' if job_index else ''}">
+                                <div class="card card-default mb32">
+                                    <div class="card-body">
+                                        <!-- <span t-if="not job.website_published" class="badge text-bg-danger mb8 p-2">unpublished</span> -->
+                                        <h3 class="text-secondary mt0 mb4">
+                                            <span t-field="job.name_id"/>
+                                        </h3> 
+                                        <h5>
+                                            <t t-esc="job.open_positions"/> open positions
+                                        </h5>
+                                        <span>
+                                            <t t-esc="job.description"/>
+                                        </span>
+
+                                        <div class="o_job_infos mt16">
+                                        
+                                            <div>
+                                                <i class="fa fa-fw fa-suitcase" title="Employment type" role="img" aria-label="Employment type"/><span t-field="job.job_type"/>
+                                            </div>
+                                            <div>
+                                                <i class="fa fa-fw fa-clock-o" title="Publication date" role="img" aria-label="Publication date"/><span t-field="job.write_date"/>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <!-- This is the about us of our /job page -->
+    <template inherit_id="index"  id="job_right_side_bar" active="True" name="Right Side Bar">
+        <xpath expr="//div[@id='jobs_grid']" position="after">
+            <div class="col-lg-3 oe_structure oe_empty" id="jobs_grid_left">
+                <section class="">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <img src="/job_posting/static/src/img/job_image_1.jpg" class="img-fluid" alt="About us"/>
+                                <h4 class="mt24 mb8">About us</h4>
+                                <p>
+                                    We are a team of passionate people whose goal is to improve everyone's life through disruptive products.
+                                    We build great products to solve your business problems.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </xpath>
+    </template>
+
+    
+
+    
+</odoo>
